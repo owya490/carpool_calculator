@@ -1,0 +1,39 @@
+{
+    "statusCode" : 200, 
+    "headers" : {
+        "Content-Type" : "application/json", 
+        "authentication" : "xyzabc"
+    },
+    "body" : {
+        "drivers" : [
+            {
+                "name" : "brian wang", 
+                "location" : "16 carolyn avenue carlingford 2118", 
+                "seats" : 5
+            }, 
+            {
+                "name" : "aidan chee", 
+                "location" : "205 8-14 lyons street strathfield 2135", 
+                "seats" : 2
+            }
+        ], 
+        "passengers" : [
+            {
+                "name" : "owen yang", 
+                "location" : "1 stotts street north bexley 2758"
+            },
+            {
+                "name" : "hayman siu", 
+                "location" : "24 hay street north rocks 2119"
+            },
+            {
+                "name" : "jun yan", 
+                "location" : "xyz park lane dundas 2117"
+            },
+            {
+                "name" : "steph zhu", 
+                "location" : "aidan street 2134"
+            }
+        ]
+    }
+}
