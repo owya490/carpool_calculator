@@ -13,8 +13,8 @@ def calculator(event, context):
         "body" : json.dumps(construct_json_response())
     }
 
-def construct_json_response():
-    root_algorithm = RootAlgorithm()
+def construct_json_response(json_data_string):
+    root_algorithm = RootAlgorithm(json_data_string)
     driver_list = root_algorithm.get_driver_list()
 
     response_json_data_list = []

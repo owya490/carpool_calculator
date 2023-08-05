@@ -93,18 +93,60 @@ class RootAlgorithm:
         return self.driver_list
 
 
+def construct_json_response(json_data_string):
+    root_algorithm = RootAlgorithm(json_data_string)
+    driver_list = root_algorithm.get_driver_list()
+
+    response_json_data_list = []
+
+    for driver in driver_list:
+        curr_driver_passenger_list = []
+        passenger_list = driver.get_driver_passenger_list()
+        for passenger in passenger_list:
+            passenger_json_data = {
+                "name": passenger.get_name(),
+                "location": {
+                    "address": passenger.get_address(),
+                    "lat": passenger.get_location()[0],
+                    "lng": passenger.get_location()[1]
+                }
+            }
+            curr_driver_passenger_list.append(passenger_json_data)
+
+        list_object_element = {
+            "driver": {
+                "name": driver.get_name(),
+                "location": {
+                    "address": driver.get_address(),
+                    "lat": driver.get_location()[0],
+                    "lng": driver.get_location()[1]
+                },
+                "destination": {
+                    "address": driver.get_destination_address(),
+                    "lat": driver.get_destination()[0],
+                    "lng": driver.get_destination()[1]
+                }
+            },
+            "passengers": curr_driver_passenger_list
+        }
+
+        response_json_data_list.append(list_object_element)
+
+    return {"result": response_json_data_list}
+
 def main():
     json_string = ''
-    with open('./test/carpool_test_1.json', 'r') as json_file:
+    with open('./test/carpool_test_2.json', 'r') as json_file:
         json_string = json_file.read()
 
     root_algorithm = RootAlgorithm(json_string)
-    for driver in root_algorithm.driver_list:
-        passenger_list = driver.driver_passenger_list
-        for passenger in passenger_list:
-            print('driver', driver.name)
-            print('passenger', passenger.name)
-            print("passenger", passenger.location)
+    print(construct_json_response(json_string))
+    # for driver in root_algorithm.driver_list:
+    #     passenger_list = driver.driver_passenger_list
+    #     for passenger in passenger_list:
+    #         print('driver', driver.name)
+    #         print('passenger', passenger.name)
+    #         print("passenger", passenger.location)
     return 
 
 

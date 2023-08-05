@@ -1,8 +1,6 @@
 from math_functions import MathematicalGenius
 import numpy as np
 from python_tsp.exact import solve_tsp_dynamic_programming
-from scipy.spatial import distance_matrix
-from scipy.optimize import linear_sum_assignment
 
 
 class Person:
@@ -86,7 +84,7 @@ class Passenger(Person):
             else:
                 # get straight line distance
                 self.driver_distance_tuple_list.append((driver, MathematicalGenius.pythagoris(self.get_location(), driver.get_location())))
-                print(self.get_name(),driver.get_name())
+                # print(self.get_name(),driver.get_name())
         self.driver_distance_tuple_list.sort(key=lambda driver_list_tuple: driver_list_tuple[1])
         # print("driver List")
         # for i in self.driver_distance_tuple_list:
@@ -135,12 +133,16 @@ class Driver(Person):
     def apply_tsp(self):
         location_coord_list = [self.location] + self.make_passenger_location_list() + [self.destination]
         
-        dist_matrix = distance_matrix(location_coord_list, location_coord_list)
-
-        # Use linear sum assignment to solve the TSP (minimize total distance)
-        row_ind, col_ind = linear_sum_assignment(dist_matrix)
-
-        # Reorder the coordinates and objects based on the optimal assignment
-        ordered_location_coord_list = [location_coord_list[i] for i in col_ind]
-        ordered_driver_passenger_list = [self.driver_passenger_list[i] for i in col_ind]
-        self.driver_passenger_list = ordered_driver_passenger_list
+        num_points = len(location_coord_list)
+        distance_matrix = np.zeros((num_points, num_points))
+        for i in range(num_points):
+            for j in range(num_points):
+                distance_matrix[i, j] = MathematicalGenius.pythagoris(location_coord_list[i], location_coord_list[j])
+        for i in range(num_points):
+            distance = MathematicalGenius.pythagoris(self.destination, location_coord_list[i])
+            distance_matrix[i][0] = distance
+        numpy_matrix = np.array(distance_matrix)
+        permutation, distance = solve_tsp_dynamic_programming(numpy_matrix)
+        for i in range(1,len(permutation)-1):
+            print(self.driver_passenger_list[permutation[i]-1].get_name())
+        print(distance)
