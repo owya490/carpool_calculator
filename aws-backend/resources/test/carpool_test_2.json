@@ -1,0 +1,17 @@
+{
+    "drivers":[
+        {"name": "Driver1", "location": "Strathfield", "seats": 5, "destination": "City"},
+        {"name": "Driver2", "location": "Eastwood", "seats": 5, "destination": "City"},
+        {"name": "Driver3", "location": "Hornsby", "seats": 5, "destination": "City"}
+    ],
+    "passengers":[
+        {"name":"Passenger1","location":"Burwood"},
+        {"name":"Passenger2","location":"Newtown"},
+        {"name":"Passenger3","location":"Mosman"},
+        {"name":"Passenger4","location":"Parramatta"},
+        {"name":"Passenger5","location":"Marrickville"},
+        {"name":"Passenger6","location":"Turramurra"},
+        {"name":"Passenger7","location":"Rhodes"},
+        {"name":"Passenger8","location":"Cheltenham"}
+    ]
+}
