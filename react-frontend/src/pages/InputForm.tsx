@@ -220,14 +220,18 @@ export const InputForm = () => {
                                 return !element.isDriver;
                             }),
                         };
-                        const response = await fetch("myUrl", {
-                            method: "POST",
-                            body: JSON.stringify(payload),
-                            headers: {
-                                "Content-Type":
-                                    "application/x-www-form-urlencoded; charset=UTF-8",
-                            },
-                        });
+                        console.log(payload);
+                        const response = await fetch(
+                            "https://49uj7z39jc.execute-api.ap-southeast-2.amazonaws.com/prod/",
+                            {
+                                method: "POST",
+                                body: JSON.stringify(payload),
+                                headers: {
+                                    "Content-Type":
+                                        "application/x-www-form-urlencoded; charset=UTF-8",
+                                },
+                            }
+                        );
                         const responseJson = await response.json();
                         setResultList(responseJson.body);
                         document
