@@ -1,20 +1,21 @@
 import json
 
-from resources.root_algorithm import RootAlgorithm
+from root_algorithm import RootAlgorithm
 
 def calculator(event, context):
     print("hello world")
+    print(event)
     return {
         'statusCode': 200,
         'headers': {
             'Content-Type': 'application/json',
             'Access-Control-Allow-Origin': '*'
         },
-        "body" : json.dumps(construct_json_response())
+        "body" : json.dumps(construct_json_response(event))
     }
 
-def construct_json_response():
-    root_algorithm = RootAlgorithm()
+def construct_json_response(event):
+    root_algorithm = RootAlgorithm(event.body)
     driver_list = root_algorithm.get_driver_list()
 
     response_json_data_list = []
