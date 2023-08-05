@@ -6,9 +6,10 @@ from scipy.optimize import linear_sum_assignment
 
 
 class Person:
-    def __init__(self, name, location):
+    def __init__(self, name, location, address):
         self.name = name
         self.location= location
+        self.address = address
     
     def get_name(self):
         return self.name
@@ -16,12 +17,15 @@ class Person:
     def get_location(self):
         return self.location
     
+    def get_address(self):
+        return self.address
+    
 class Passenger(Person):
     driver_distance_tuple_list = [] # (Driver, distance)
     delta_val = 0
 
-    def __init__(self, name, location):
-        super().__init__(name, location)
+    def __init__(self, name, location, address):
+        super().__init__(name, location, address)
         self.driver_distance_tuple_list = []
         self.delta_val = 0
 
@@ -78,15 +82,20 @@ class Passenger(Person):
             # check whether we take perpendicular or straight line distance
             if MathematicalGenius.is_point_between_lines(driver_normal_a, driver_normal_b, driver_normal_c, dest_normal_a, dest_normal_b, dest_normal_c, self.get_location()):
                 # get perpendicular distance
-                self.driver_distance_tuple_list.append((driver, MathematicalGenius.perpendicular_distance(driver_dest_a, driver_dest_b, driver_dest_c, driver.get_location())))
-                print("is between lines " + self.get_name() + " " + driver.get_name())
+                self.driver_distance_tuple_list.append((driver, MathematicalGenius.perpendicular_distance(driver_dest_a, driver_dest_b, driver_dest_c, self.get_location())))
             else:
                 # get straight line distance
                 self.driver_distance_tuple_list.append((driver, MathematicalGenius.pythagoris(self.get_location(), driver.get_location())))
+                print(self.get_name(),driver.get_name())
         self.driver_distance_tuple_list.sort(key=lambda driver_list_tuple: driver_list_tuple[1])
-
+        # print("driver List")
+        # for i in self.driver_distance_tuple_list:
+        #     print(i[0].get_name(),i[1])
+        # print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
         # then set INITIAL delta_val
         self.update_delta()
+        # print(str(self.delta_val) + self.get_name())
+
         
 
         
@@ -94,11 +103,13 @@ class Driver(Person):
     driver_passenger_list = []
     num_seats = 0
     destination = [0, 0]
-    def __init__(self, name, location, num_seats, destination):
-        super().__init__(name, location)
+    destination_address = ''
+    def __init__(self, name, location, num_seats, destination, address, destination_address):
+        super().__init__(name, location, address)
         self.driver_passenger_list = []
         self.num_seats = num_seats
         self.destination = destination
+        self.destination_address = destination_address
 
     def can_add_passenger(self):
         return len(self.driver_passenger_list) < self.num_seats - 1
@@ -106,8 +117,14 @@ class Driver(Person):
     def add_passenger_to_list(self, passenger):
         self.driver_passenger_list.append(passenger)
 
+    def get_driver_passenger_list(self):
+        return self.driver_passenger_list
+
     def get_destination(self):
         return self.destination
+    
+    def get_destination_address(self):
+        return self.destination_address
     
     def make_passenger_location_list(self):
         passengers = []
@@ -116,7 +133,7 @@ class Driver(Person):
         return passengers
 
     def apply_tsp(self):
-        location_coord_list = [self.location] + self.make_passenger_location_list + [self.destination]
+        location_coord_list = [self.location] + self.make_passenger_location_list() + [self.destination]
         
         dist_matrix = distance_matrix(location_coord_list, location_coord_list)
 

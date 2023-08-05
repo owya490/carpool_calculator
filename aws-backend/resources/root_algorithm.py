@@ -25,8 +25,8 @@ class RootAlgorithm:
         self.assign_passengers_to_driver()
 
         # apply tsp to order passenger lists in each driver
-        # for driver in self.driver_list:
-        #     driver.apply_tsp()
+        for driver in self.driver_list:
+            driver.apply_tsp()
 
     
     # helper function for init
@@ -41,7 +41,7 @@ class RootAlgorithm:
             passenger_location_string = json_passenger_object['location']
 
             passenger_location = self.convert_location_string_to_coords(passenger_location_string)
-            self.passenger_list.append(Passenger(passenger_name, passenger_location))
+            self.passenger_list.append(Passenger(passenger_name, passenger_location, passenger_location_string))
 
         # append to driver_list
         json_data_drivers_list = python_json_data['drivers']
@@ -52,7 +52,7 @@ class RootAlgorithm:
             driver_seats = json_driver_object['seats']
             driver_destination_string = json_driver_object['destination']
             driver_destination = self.convert_location_string_to_coords(driver_destination_string)
-            self.driver_list.append(Driver(driver_name, driver_location, driver_seats, driver_destination))
+            self.driver_list.append(Driver(driver_name, driver_location, driver_seats, driver_destination, passenger_location_string, driver_destination_string))
         
     # helper function for process_json_data
     def convert_location_string_to_coords(self, location_string):
