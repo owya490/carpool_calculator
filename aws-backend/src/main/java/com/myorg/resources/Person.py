@@ -1,6 +1,4 @@
 from math_functions import MathematicalGenius
-import numpy as np
-from python_tsp.exact import solve_tsp_dynamic_programming
 from scipy.spatial import distance_matrix
 from scipy.optimize import linear_sum_assignment
 

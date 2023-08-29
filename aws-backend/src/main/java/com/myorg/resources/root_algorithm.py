@@ -1,9 +1,7 @@
 import json
 import geocoder
-import math
 
 from Person import Passenger, Driver
-from math_functions import MathematicalGenius
 
 class RootAlgorithm:
     passenger_list = []

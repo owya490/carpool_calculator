@@ -1,4 +1,4 @@
-import json, pprint, geocoder, requests
+import json, geocoder
 
 class Person:
     def __init__(self, name, address, if_driver, seats):

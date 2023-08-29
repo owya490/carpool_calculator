@@ -1,0 +1,17 @@
+certifi==2023.7.22
+charset-normalizer==3.2.0
+click==8.1.7
+decorator==5.1.1
+Deprecated==1.2.14
+future==0.18.3
+geocoder==1.38.1
+idna==3.4
+networkx==2.8.8
+numpy==1.25.2
+ratelim==0.1.6
+requests==2.31.0
+six==1.16.0
+tabulate==0.8.10
+tsplib95==0.7.1
+urllib3==2.0.4
+wrapt==1.15.0
