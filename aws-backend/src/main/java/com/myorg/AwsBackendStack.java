@@ -22,13 +22,13 @@ public class AwsBackendStack extends Stack {
     public AwsBackendStack(final Construct scope, final String id, final StackProps props) {
         super(scope, id, props);
 
-        String layerDirectory = "./src/main/java/com/myorg/resources/python-lambda-layer-packages";
+        String layerDirectory = "./layer.zip";
         LayerVersion pythonPackagesLambdaLayer = LayerVersion.Builder.create(this, "python-lambda-layer-packages").compatibleRuntimes(Arrays.asList(Runtime.PYTHON_3_9)).code(Code.fromAsset(layerDirectory)).build();
 
 
         Function carpoolFunction = new Function(this, "carpoolFunction", FunctionProps.builder()
         .runtime(Runtime.PYTHON_3_9)
-        .code(Code.fromAsset("./src/main/java/com/myorg/resources"))
+        .code(Code.fromAsset("./resources"))
         .handler("carpool_handler.calculator")
         .memorySize(1024)
         .timeout(Duration.seconds(300))
